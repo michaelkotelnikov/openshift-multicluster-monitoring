@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  labels:
+    app: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: prometheus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+        - name: prometheus
+          args:
+            - --log.level=debug
+            - --config.file=/opt/bitnami/prometheus/conf/prometheus.yml
+          image: docker.io/bitnami/prometheus:2.36.1
+          ports:
+            - containerPort: 9090
+              name: prometheus
+          volumeMounts:
+            - mountPath: /opt/bitnami/prometheus/conf/prometheus.yml
+              name: prometheus
+              subPath: prometheus.yml
+      volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: prometheus.yml
+              path: prometheus.yml
+            name: prometheus
+          name: prometheus

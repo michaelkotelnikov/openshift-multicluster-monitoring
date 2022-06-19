@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: thanos-receiver
+  name: thanos-receiver
+spec:
+  ports:
+  - name: 10909-tcp
+    port: 10909
+    protocol: TCP
+    targetPort: 10909
+  - name: 10908-tcp
+    port: 10908
+    protocol: TCP
+    targetPort: 10908
+  - name: 10907-tcp
+    port: 10907
+    protocol: TCP
+    targetPort: 10907
+  selector:
+    app: thanos-receiver
+  sessionAffinity: None
+  type: ClusterIP

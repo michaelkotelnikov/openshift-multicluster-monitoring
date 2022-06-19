@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thanos-receiver
+  labels:
+    app: thanos-receiver
+spec:
+  selector:
+    matchLabels:
+      app: thanos-receiver
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: thanos-receiver
+    spec:
+      containers:
+        - name: thanos-receiver
+          env:
+          - name: OBJSTORE_CONFIG
+            valueFrom:
+              secretKeyRef:
+                key: thanos.yaml
+                name: thanos-object-storage
+          args:
+            - receive
+            - --grpc-address=0.0.0.0:10907
+            - --http-address=0.0.0.0:10909
+            - --receive.replication-factor=1
+            - --label=receive="true"
+            - --receive.local-endpoint=127.0.0.1:10907
+            - --remote-write.address=0.0.0.0:10908
+            - --objstore.config=$(OBJSTORE_CONFIG)
+          image: quay.io/thanos/thanos:v0.26.0
+          ports:
+            - containerPort: 10908
+              name: thanos-write
+            - containerPort: 10909
+              name: thanos-web
