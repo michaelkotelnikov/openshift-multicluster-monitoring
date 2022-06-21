@@ -1,1 +1,1 @@
-# openshift-multicluster-monitoring
+# Openshift Multicluster Monitoring
