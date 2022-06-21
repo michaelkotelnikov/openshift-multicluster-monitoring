@@ -1,0 +1,47 @@
+apiVersion: v1
+data:
+  config.yaml: |
+    alertmanagerMain: null
+    enableUserWorkload: true
+    grafana: null
+    http: null
+    k8sPrometheusAdapter: null
+    kubeStateMetrics: null
+    openshiftStateMetrics: null
+    prometheusK8s:
+      additionalAlertManagerConfigs:
+      - apiVersion: v2
+        bearerToken:
+          key: token
+          name: observability-alertmanager-accessor
+        pathPrefix: /
+        scheme: https
+        staticConfigs:
+        - alertmanager-open-cluster-management-observability.apps.anoel.acmcourse.cloudlet-dev.com
+        tlsConfig:
+          ServerName: ""
+          ca:
+            key: service-ca.crt
+            name: hub-alertmanager-router-ca
+          insecureSkipVerify: false
+      externalLabels:
+        cluster: df137028-cf88-4506-b7f9-a2b14dbd5553
+        ocp_cluster_name: oc46-dev
+      logLevel: ""
+      nodeSelector: null
+      remoteWrite:
+      - url: "http://thanos-receiver.multicluster-monitoring.svc:10908/api/v1/receive"
+        writeRelabelConfigs:
+        - regex: 'prometheus_replica'
+          action: 'labeldrop'
+      resources: null
+      retention: ""
+      tolerations: null
+      volumeClaimTemplate: null
+    prometheusOperator: null
+    telemeterClient: null
+    thanosQuerier: null
+kind: ConfigMap
+metadata:
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring

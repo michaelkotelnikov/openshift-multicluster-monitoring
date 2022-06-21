@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-workload-monitoring-config
+  namespace: openshift-user-workload-monitoring
+data:
+  config.yaml: |
+    prometheus:
+      externalLabels:
+        ocp_cluster_name: oc46-dev
+      remoteWrite:
+      - url: "http://thanos-receiver.multicluster-monitoring.svc:10908/api/v1/receive"
+        writeRelabelConfigs:
+        - regex: 'prometheus_replica'
+          action: 'labeldrop'
