@@ -16,6 +16,8 @@ spec:
     spec:
       containers:
         - name: thanos-receiver
+          securityContext:
+            privileged: true
           env:
           - name: OBJSTORE_CONFIG
             valueFrom:
