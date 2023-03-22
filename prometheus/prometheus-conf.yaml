@@ -42,7 +42,7 @@ data:
           - targets:
             - 'prometheus-k8s.openshift-monitoring.svc:9091'
             labels:
-              ocp_cluster_name: 'oc46-dev'
+              ocp_cluster_name: 'ocp411-dev'
         tls_config:
           insecure_skip_verify: true
         params:
