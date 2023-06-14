@@ -1,0 +1,5 @@
+service:
+  name: opa-exporter
+cluster:
+  name: placeholder
+namespace: governance-monitoring
