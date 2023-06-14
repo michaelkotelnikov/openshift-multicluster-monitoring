@@ -7,6 +7,11 @@ data:
       evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
       # scrape_timeout is set to the global default (10s).
 
+    remote_write:
+      - url: "https://{{ .Values.thanos.receiver }}/api/v1/receive"
+        tls_config:
+          insecure_skip_verify: true
+
     # Alertmanager configuration
     alerting:
       alertmanagers:

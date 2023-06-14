@@ -3,3 +3,5 @@ service:
 cluster:
   name: placeholder
 namespace: governance-monitoring
+thanos:
+  receiver: thanos-receiver-multicluster-monitoring.apps.grc-hub.kubeday-demo.com
